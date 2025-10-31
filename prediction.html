@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fast Prediction for Organic Solar Cells</title>
+    <link rel="stylesheet" href="prediction/styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/kekule/dist/themes/default/kekule.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://unpkg.com/smiles-drawer@1.0.0/dist/smiles-drawer.min.js"></script>
+    <script src="https://unpkg.com/kekule/dist/kekule.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+    <div class="header"><a href="cover.html">Fast Prediction for Organic Solar Cells</a></div>
+    <div class="navbar">
+        <a href="prediction.html">Page1</a>
+        <a href="search.html">Page2</a>
+        <a href="contact.html">Support</a>
+    </div>
+    <div class="container" id="pdfContent">
+        <p>本頁面旨在為有機太陽能電池提供快速預測服務</p>
+        <p>您可以輸入供體(Donor)和受體(Acceptor)的名稱或可以使用Draw的功能，將材料繪畫出來，並按下Chemical Structure按鈕可生成其化學結構</p>
+        <p>好奇材料使用在太陽能電池上後關注的性質嗎？按下Properties按鈕後獲取性質數據，包含：</p>
+        <div class="buttons">
+            <button class="info-button" style="background-color: none; border: none; color: black; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 12px;" onmouseover="showTooltip(event, 'HOMO', 'tooltip1')" onmouseout="hideTooltip('tooltip1')">HOMO</button>
+            <button class="info-button" style="background-color: none; border: none; color: black; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 12px;" onmouseover="showTooltip(event, 'LUMO', 'tooltip1')" onmouseout="hideTooltip('tooltip1')">LUMO</button>
+            <button class="info-button" style="background-color: none; border: none; color: black; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 12px;" onmouseover="showTooltip(event, 'Bandgap', 'tooltip1')" onmouseout="hideTooltip('tooltip1')">Bandgap</button>
+        </div>
+        <div id="tooltip" class="tooltip"></div>
+        <p>如果把材料組合成元件呢?按下Performance按鈕後獲取性能數據，包含：</p>
+        <div class="buttons">
+            <button class="info-button" style="background-color: none; border: none; color: black; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 12px;" onmouseover="showTooltip(event, 'PCE', 'tooltip2')" onmouseout="hideTooltip('tooltip2')">PCE</button>
+            <button class="info-button" style="background-color: none; border: none; color: black; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 12px;" onmouseover="showTooltip(event, 'Voc', 'tooltip2')" onmouseout="hideTooltip('tooltip2')">Voc</button>
+            <button class="info-button" style="background-color: none; border: none; color: black; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 12px;" onmouseover="showTooltip(event, 'Jsc', 'tooltip2')" onmouseout="hideTooltip('tooltip2')">Jsc</button>
+            <button class="info-button" style="background-color: none; border: none; color: black; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 12px;" onmouseover="showTooltip(event, 'FF', 'tooltip2')" onmouseout="hideTooltip('tooltip2')">FF</button>
+        </div>
+        <div class="form-group">
+            <label for="donorInput">Donor Name:</label>
+            <input type="text" id="donorInput" placeholder="Enter donor name">
+            <button class="drawBtn" data-target="donor">Draw</button><span>   Try   </span>
+            <button onclick="fillInput('donorInput', 'PBDB-T')">PBDB-T</button><span>   Or   </span>
+            <button onclick="fillInput('donorInput', '2,3,4-Trimethylpentane')">2,3,4-Trimethylpentane</button>
+        </div>
+        <div class="form-group">
+            <label for="acceptorInput">Acceptor Name:</label>
+            <input type="text" id="acceptorInput" placeholder="Enter acceptor name">
+            <button class="drawBtn" data-target="acceptor">Draw</button><span>   Try   </span>
+            <button onclick="fillInput('acceptorInput', 'Y6')">Y6</button><span>   Or   </span>
+            <button onclick="fillInput('acceptorInput', '3,5,7-trimethyldecane')">3,5,7-trimethyldecane</button>
+        </div>
+        <div class="buttons">
+            <button id="nameToStructureBtn">Chemical Structure</button>
+            <button id="propertiesButton">Properties</button>
+            <button id="performanceButton">Performance</button>
+        </div>
+        <div id="resultContainer">
+            <div class="structure-container" id="smilesDrawerContainer">
+                <div class="canvas-container">
+                    <canvas id="donorCanvas" width="300" height="300"></canvas>
+                    <div class="canvas-label">Donor Structure</div>
+                </div>
+                <div class="canvas-container">
+                    <canvas id="acceptorCanvas" width="300" height="300"></canvas>
+                    <div class="canvas-label">Acceptor Strucutre</div>
+                </div>
+            </div>
+            <div id="result"></div>
+            <div id="smilesDisplay" class="smiles-display"></div>
+            <div class="chart-container" id="chartContainerPerformance">
+                <div id="tablePCE" class="table-container"></div>
+                <div id="chartPCE" style="display:none;"></div>
+                <div class="structure-container">
+                    <div class="canvas-container">
+                        <canvas id="clickedDonorCanvasPCE" width="300" height="300"></canvas>
+                        <div class="canvas-label">Clicked Donor Structure</div>
+                    </div>
+                    <div class="canvas-container">
+                        <canvas id="clickedAcceptorCanvasPCE" width="300" height="300"></canvas>
+                        <div class="canvas-label">Clicked Acceptor Structure</div>
+                    </div>
+                </div>
+                <div id="tablePCE_click" class="table-container"></div>
+                
+
+                <div id="tableVoc" class="table-container"></div>
+                <div id="chartVoc" style="display:none;"></div>
+                <div class="structure-container">
+                    <div class="canvas-container">
+                        <canvas id="clickedDonorCanvasVoc" width="300" height="300"></canvas>
+                        <div class="canvas-label">Clicked Donor Structure</div>
+                    </div>
+                    <div class="canvas-container">
+                        <canvas id="clickedAcceptorCanvasVoc" width="300" height="300"></canvas>
+                        <div class="canvas-label">Clicked Acceptor Structure</div>
+                    </div>
+                </div>
+                <div id="tableVoc_click" class="table-container"></div>
+                
+
+                <div id="tableJsc" class="table-container"></div>
+                <div id="chartJsc" style="display:none;"></div>
+                <div class="structure-container">
+                    <div class="canvas-container">
+                        <canvas id="clickedDonorCanvasJsc" width="300" height="300"></canvas>
+                        <div class="canvas-label">Clicked Donor Structure</div>
+                    </div>
+                    <div class="canvas-container">
+                        <canvas id="clickedAcceptorCanvasJsc" width="300" height="300"></canvas>
+                        <div class="canvas-label">Clicked Acceptor Structure</div>
+                    </div>
+                </div>
+                <div id="tableJsc_click" class="table-container"></div>
+                
+
+                <div id="tableFF" class="table-container"></div>
+                <div id="chartFF" style="display:none;"></div>
+                <div class="structure-container">
+                    <div class="canvas-container">
+                        <canvas id="clickedDonorCanvasFF" width="300" height="300"></canvas>
+                        <div class="canvas-label">Clicked Donor Structure</div>
+                    </div>
+                    <div class="canvas-container">
+                        <canvas id="clickedAcceptorCanvasFF" width="300" height="300"></canvas>
+                        <div class="canvas-label">Clicked Acceptor Structure</div>
+                    </div>
+                </div>
+                <div id="tableFF_click" class="table-container"></div>
+                
+            </div>
+            <div class="chart-container" id="chartContainerProperties">
+                <div id="donorChart" style="width: 1020px; height: 600px;"></div>
+                <canvas id="donorChart"></canvas>
+                
+                <div id="tableHOMODonor" class="table-container"></div>
+                <div id="chartHOMODonor" style="display:none;"></div>
+                <div class="structure-container">
+                    <div class="canvas-container">
+                        <canvas id="clickedDonorCanvasHOMODonor" width="300" height="300"></canvas>
+                        <div class="canvas-label">Clicked Donor Structure</div>
+                    </div>
+                    <div class="canvas-container">
+                        <canvas id="clickedAcceptorCanvasHOMODonor" width="300" height="300"></canvas>
+                        <div class="canvas-label">Clicked Acceptor Structure</div>
+                    </div>
+                </div>
+                <div id="spectrumHOMODonor" class="spectrum-container"></div>
+                <div id="tableHOMODonor_click" class="table-container"></div>
+                
+                
+
+                <div id="tableLUMODonor" class="table-container"></div>
+                <div id="chartLUMODonor" style="display:none;"></div>
+                <div class="structure-container">
+                    <div class="canvas-container">
+                        <canvas id="clickedDonorCanvasLUMODonor" width="300" height="300"></canvas>
+                        <div class="canvas-label">Clicked Donor Structure</div>
+                    </div>
+                    <div class="canvas-container">
+                        <canvas id="clickedAcceptorCanvasLUMODonor" width="300" height="300"></canvas>
+                        <div class="canvas-label">Clicked Acceptor Structure</div>
+                    </div>
+                </div>
+                <div id="spectrumLUMODonor" class="spectrum-container"></div>
+                <div id="tableLUMODonor_click" class="table-container"></div>
+                
+                
+                <div id="tableBandgapDonor" class="table-container"></div>
+                <div id="chartBandgapDonor" style="display:none;"></div>
+                <div class="structure-container">
+                    <div class="canvas-container">
+                        <canvas id="clickedDonorCanvasBandgapDonor" width="300" height="300"></canvas>
+                        <div class="canvas-label">Clicked Donor Structure</div>
+                    </div>
+                    <div class="canvas-container">
+                        <canvas id="clickedAcceptorCanvasBandgapDonor" width="300" height="300"></canvas>
+                        <div class="canvas-label">Clicked Acceptor Structure</div>
+                    </div>
+                </div>
+                <div id="spectrumBandgapDonor" class="spectrum-container"></div>
+                <div id="tableBandgapDonor_click" class="table-container"></div>
+                <!-- 分隔線 -->
+                <div id="separator" style="height: 40px; background-color: black; width: 90%; margin: 20px auto; display: none;"></div>
+
+
+                
+
+                <canvas id="acceptorChart"></canvas>
+                
+                <div id="tableHOMOAcceptor" class="table-container"></div>
+                <div id="chartHOMOAcceptor" style="display:none;"></div>
+                <div class="structure-container">
+                    <div class="canvas-container" >
+                        <canvas id="clickedDonorCanvasHOMOAcceptor" width="300" height="300" ></canvas>
+                        <div class="canvas-label">Clicked Donor Structure</div>
+                    </div>
+                    <div class="canvas-container">
+                        <canvas id="clickedAcceptorCanvasHOMOAcceptor" width="300" height="300"></canvas>
+                        <div class="canvas-label">Clicked Acceptor Structure</div>
+                    </div>
+                </div>
+                <div id="spectrumHOMOAcceptor" class="spectrum-container"></div>
+                <div id="tableHOMOAcceptor_click" class="table-container"></div>
+                
+                
+
+                <div id="tableLUMOAcceptor" class="table-container"></div>
+                <div id="chartLUMOAcceptor" style="display:none;"></div>
+                <div class="structure-container">
+                    <div class="canvas-container">
+                        <canvas id="clickedDonorCanvasLUMOAcceptor" width="300" height="300"></canvas>
+                        <div class="canvas-label">Clicked Donor Structure</div>
+                    </div>
+                    <div class="canvas-container">
+                        <canvas id="clickedAcceptorCanvasLUMOAcceptor" width="300" height="300"></canvas>
+                        <div class="canvas-label">Clicked Acceptor Structure</div>
+                    </div>
+                </div>
+                <div id="spectrumLUMOAcceptor" class="spectrum-container"></div>
+                <div id="tableLUMOAcceptor_click" class="table-container"></div>
+                
+                
+
+                
+
+                <div id="tableBandgapAcceptor" class="table-container"></div>
+                <div id="chartBandgapAcceptor" style="display:none;"></div>
+                <div class="structure-container">
+                    <div class="canvas-container">
+                        <canvas id="clickedDonorCanvasBandgapAcceptor" width="300" height="300"></canvas>
+                        <div class="canvas-label">Clicked Donor Structure</div>
+                    </div>
+                    <div class="canvas-container">
+                        <canvas id="clickedAcceptorCanvasBandgapAcceptor" width="300" height="300"></canvas>
+                        <div class="canvas-label">Clicked Acceptor Structure</div>
+                    </div>
+                </div>
+                <div id="spectrumBandgapAcceptor" class="spectrum-container"></div>
+                <div id="tableBandgapAcceptor_click" class="table-container"></div>
+                
+                
+
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="editor-container" id="editorWindow">
+        <div id="editor" class="editor-canvas"></div>
+        <button id="confirmButton">Confirm</button>
+        <button id="closeEditorBtn">Close</button>
+    </div>
+    <footer class="footer">
+        <p>Copyright © 2024 SPIRIT.   All rights reserved.  SPIRIT uses cookies to personalize content. <a href="privacy.html">Privacy Policy</a></p>
+        
+    </footer>
+
+    <button id="downloadPdfBtn" class="download-pdf-btn">Report</button>
+    <script>
+        function fillInput(inputId, value) {
+            document.getElementById(inputId).value = value;
+        }
+        function showTooltip(event, term) {
+            const meanings = {
+                HOMO: "HOMO (Highest Occupied Molecular Orbital) 是分子中最高能量的被佔據軌道，代表電子能量的上限。",
+                LUMO: "LUMO (Lowest Unoccupied Molecular Orbital) 是分子中最低能量的未佔據軌道，代表電子能量的下限。",
+                Bandgap: "Bandgap 是HOMO與LUMO之間的能量差，決定了材料的電子傳導性質。",
+                PCE: "PCE (Power Conversion Efficiency) 是光電元件的功率轉換效率，表示太陽能轉化為電能的效率。",
+                Voc: "Voc (Open-Circuit Voltage) 是太陽能電池在開路條件下的最大電壓。",
+                Jsc: "Jsc (Short-Circuit Current) 是太陽能電池在短路條件下的電流密度。",
+                FF: "FF (Fill Factor) 是太陽能電池的填充因子，表示元件的最大功率與理論最大功率之間的比值。"
+            };
+
+            const tooltip = document.getElementById('tooltip');
+            tooltip.innerText = meanings[term];
+            tooltip.style.display = 'block';
+            tooltip.style.left = event.pageX + 'px';
+            tooltip.style.top = event.pageY + 'px';
+        }
+
+        function hideTooltip() {
+            const tooltip = document.getElementById('tooltip');
+            tooltip.style.display = 'none';
+        }
+
+    </script>
+    <script src="prediction/data1.js"></script>
+    <script src="prediction/data1-1.js"></script>
+    <script src="prediction/chemistry.js"></script>
+    <script src="prediction/tables.js"></script>
+    <script src="prediction/charts.js"></script>
+    <script src="prediction/events.js"></script>
+    <script src="prediction/pdf.js"></script>
+</body>
+</html>

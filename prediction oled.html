@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fast Prediction for Organic Light-Emitting Diode</title>
+    <link rel="stylesheet" href="prediction/styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/kekule/dist/themes/default/kekule.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://unpkg.com/smiles-drawer@1.0.0/dist/smiles-drawer.min.js"></script>
+    <script src="https://unpkg.com/kekule/dist/kekule.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+    <div class="header"><a href="cover.html">Fast Prediction for Organic Light-Emitting Diode</a></div>
+    <div class="navbar">
+        <a href="prediction oled.html">Page1</a>
+        <a href="search oled.html">Page2</a>
+        <a href="contact oled.html">Support</a>
+    </div>
+    <div class="container" id="pdfContent">
+        <p>本頁面旨在為有機發光二極體提供快速預測服務</p>
+        <p>您可以輸入材料的名稱或可以使用Draw的功能，將材料繪畫出來，並按下Chemical Structure按鈕可生成其化學結構</p>
+        <p>好奇材料使用在發光二極體上後關注的性質及性能嗎？按下按鈕後獲取相關數據，包含：</p>
+        
+        <div class="form-group">
+            <label for="materialInput">Material Name:</label>
+            <input type="text" id="materialInput" placeholder="Enter material name">
+            <button class="drawBtn" data-target="material">Draw</button><span>   Try   </span>
+            <button onclick="fillInput('materialInput', 'PXZ-DPS')">PXZ-DPS</button><span>   Or   </span>
+            <button onclick="fillInput('materialInput', '2,3,4-Trimethylpentane')">2,3,4-Trimethylpentane</button>
+        </div>
+
+        <div class="buttons">
+            <button id="nameToStructureBtn">Chemical Structure</button>
+            <button id="Button">Properties/Performance</button>
+            
+        </div>
+        <div id="resultContainer">
+            <div class="structure-container" id="smilesDrawerContainer">
+                <div class="canvas-container">
+                    <canvas id="materialCanvas" width="300" height="300"></canvas>
+                    <div class="canvas-label">Material Structure</div>
+                </div>
+ 
+            </div>
+            <div id="result"></div>
+            <div id="smilesDisplay" class="smiles-display"></div>
+            <div class="chart-container" id="chartContainerPerformance">
+                
+            </div>
+            <div class="chart-container" id="chartContainerProperties">  
+                <div id="tablePLQY" class="table-container"></div>
+                <div id="chartPLQY" ></div>
+                <div id="titlePLQY" style="margin:6px 0; font-weight:600;"></div>
+                <div class="structure-container">
+                    <div class="canvas-container">
+                        <canvas id="clickedMaterialCanvasPLQY" width="300" height="300"></canvas>
+                        <div class="canvas-label">Clicked Material Structure</div>
+                    </div>
+                </div>
+                <div id="tablePLQY_click" class="table-container"></div>
+                <div id="tableEQE" class="table-container"></div>
+                <div id="chartEQE"></div>
+                <div id="titleEQE" style="margin:6px 0; font-weight:600;"></div>
+                <div class="structure-container">
+                    <div class="canvas-container">
+                        <canvas id="clickedMaterialCanvasEQE" width="300" height="300"></canvas>
+                        <div class="canvas-label">Clicked Material Structure</div>
+                    </div>
+                </div>
+                <div id="tableEQE_click" class="table-container"></div>           
+                                
+            </div>
+        </div>
+    </div>
+
+    <div class="editor-container" id="editorWindow">
+        <div id="editor" class="editor-canvas"></div>
+        <button id="confirmButton">Confirm</button>
+        <button id="closeEditorBtn">Close</button>
+    </div>
+    <footer class="footer">
+        <p>Copyright © 2024 SPIRIT.   All rights reserved.  SPIRIT uses cookies to personalize content. <a href="privacy.html">Privacy Policy</a></p>
+        
+    </footer>
+
+    <button id="downloadPdfBtn" class="download-pdf-btn">Report</button>
+    <script>
+        function fillInput(inputId, value) {
+            document.getElementById(inputId).value = value;
+        }
+    </script>
+    
+    <script src="prediction oled/data2.js"></script>
+    <script src="prediction oled/data1-1.js"></script>
+    <script src="prediction oled/chemistry.js"></script>
+    <script src="prediction oled/tables.js"></script>
+    <script src="prediction oled/charts.js"></script>
+    <script src="prediction oled/events.js"></script>
+    <script src="prediction oled/pdf.js"></script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>四個領域介紹</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            width: 100%;
+            text-align: center;
+            font-size: 24px;
+        }
+        .header a {
+            color: white;
+            text-decoration: none;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            width: 80%;
+            max-width: 1200px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .grid-item {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .icon {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 20px;
+        }
+        h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        p {
+            font-size: 14px;
+            color: #666;
+        }
+        .image-button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="our research.html">Fast Prediction of Structure</a>
+    </div>
+
+    <div class="grid-container">
+        <div class="grid-item">
+            <button onclick="location.href='prediction.html'" class="image-button">
+                <img src="Solar.jpg" alt="Polymer Solar Cell" class="icon">
+            </button>
+            <h3>Polymer Solar Cell</h3>
+            <p>聚合物太陽能電池是一種使用有機聚合物材料的薄膜太陽能電池技術，具有低成本、柔性高、重量輕的優點，適合應用於可穿戴設備和便攜式電子產品中。</p>
+        </div>
+        <div class="grid-item">
+            <button onclick="location.href='123.html'" class="image-button">
+                <img src="Epoxy.jpg" alt="Epoxy Resin Curing Agent" class="icon">
+            </button>
+            <h3>Epoxy Resin Curing Agent</h3>
+            <p>環氧樹脂固化劑是用於環氧樹脂材料的交聯劑，應用於電子、汽車、航空航天等行業，影響固化速度、機械性能及熱穩定性。</p>
+        </div>
+        <div class="grid-item">
+            <button onclick="location.href='123.html'" class="image-button">
+                <img src="CO2.jpg" alt="CO2 Reduction" class="icon">
+            </button>
+            <h3>Carbon Dioxide Reduction</h3>
+            <p>二氧化碳還原技術旨在將CO₂轉化為有用的化學品或燃料，在減少溫室氣體排放和能源轉型中扮演重要角色。</p>
+        </div>
+        <div class="grid-item">
+            <button onclick="location.href='prediction oled.html'" class="image-button">
+                <img src="Led.jpg" alt="Polymer Light Emitting Diodes" class="icon">
+            </button>
+            <h3>Polymer Light Emitting Diodes</h3>
+            <p>聚合物發光二極體是一種基於有機聚合物材料的發光器件，具有低功耗、成本低、柔性顯示等特點，逐漸成為傳統LED和OLED的替代技術。</p>
+        </div>
+    </div>
+</body>
+</html>
