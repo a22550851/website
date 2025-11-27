@@ -3184,10 +3184,7 @@ async function fetchSpectrumPredictionData(donorSmiles = null, acceptorSmiles = 
             const donorResult = data.donor_value || [];
             const acceptorResult = data.acceptor_value || [];
 
-            // ====== 新增：詳細查看光譜數據 ======
-            console.log("Donor spectrum data (raw):", JSON.stringify(donorResult, null, 2));
-            console.log("Acceptor spectrum data (raw):", JSON.stringify(acceptorResult, null, 2));
-            // ====================================
+            
 
             // 只返回光谱数据，而不渲染
             return { donorResult, acceptorResult };
@@ -4011,3 +4008,4 @@ function changeCanvasLabelColor(canvasId, color) {
         canvasLabel.style.color = color;
     }
 }
+
