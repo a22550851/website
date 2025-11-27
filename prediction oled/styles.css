@@ -1,0 +1,242 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+    font-size: 24px;
+}
+.header a {
+    color: white; /* 新增這行 */
+    text-decoration: none;
+}
+
+.navbar {
+    overflow: hidden;
+    background-color: #333;
+}
+
+.navbar a {
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.container {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    page-break-inside: avoid; /* 避免分頁 */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.form-group button {
+    background-color: #333;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.form-group button:hover {
+    background-color: #555;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    page-break-inside: avoid; /* 避免分頁 */
+}
+
+.buttons button {
+    flex: 1;
+}
+
+.structure-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    page-break-inside: avoid; /* 避免分頁 */
+}
+
+.canvas-container {
+    position: relative;
+    margin: 10px;
+    page-break-inside: avoid; /* 避免分頁 */
+}
+
+.canvas-label {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 5px;
+    border-radius: 5px;
+    font-weight: bold;
+    color: white; /* 初始顏色為白色 */
+}
+
+.editor-container {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    border-radius: 8px;
+}
+
+.editor-canvas {
+    border: 1px solid black;
+    margin-bottom: 10px;
+}
+
+.table-container {
+    margin-top: 20px;
+    overflow-x: auto;
+    page-break-inside: avoid; /* 避免分頁 */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    page-break-inside: avoid; /* 避免分頁 */
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.error {
+    color: red;
+}
+
+.smiles-display {
+    margin: 10px 0;
+    font-weight: bold;
+    color: #333;
+}
+
+.details-container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.chart-container {
+    margin-bottom: 40px;
+    page-break-inside: avoid; /* 避免分頁 */
+}
+
+.chart-title {
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.download-pdf-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.download-pdf-btn:hover {
+    background-color: #555;
+}
+
+.drawBtn + span, .drawBtn + span + button, .drawBtn + span + button + span, .drawBtn + span + button + span + button + span, .drawBtn + span + button + span + button {
+    font-size: 12px; /* 調整成你需要的字體大小 */
+    margin-left: 5px; /* 調整間距 */
+    margin-right: 5px; /* 調整間距 */
+    padding: 2px 5px; /* 調整按鈕的內邊距，讓它看起來較小 */
+}
+
+.drawBtn + span + button, .drawBtn + span + button + span + button, .drawBtn + span + button + span + button + span + button {
+    background-color: transparent; /* 設置背景透明 */
+    border: none; /* 移除邊框 */
+    color: #333; /* 設置文字顏色 */
+    cursor: pointer; /* 設置鼠標懸停時的光標 */
+}
+
+/* 懸停狀態 */
+.drawBtn + span + button:hover, .drawBtn + span + button + span + button:hover, .drawBtn + span + button + span + button + span + button:hover {
+    background-color: transparent; /* 保持背景透明 */
+    color: #333; /* 保持文字顏色 */
+}
+.footer {
+    background-color: #2c2c2c;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 14px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer a {
+    color: #9cdbff;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
