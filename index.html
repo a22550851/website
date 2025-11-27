@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>polymer-ml-platfomr</title>
+    <style>
+       body {
+           background-image: url('SPIRIT.png');
+           background-size: cover; /* 使背景图覆盖整个页面 */
+           background-repeat: no-repeat;
+           background-attachment: fixed; /* 使背景图固定不滚动 */
+       }
+
+       .btn {
+           position: relative;
+           min-width: 200px;
+           background: transparent; /* 背景透明 */
+           border: 2px solid #111111;
+           overflow: hidden;
+       }
+
+       .btn div,
+       .btn:before {
+           font-size: 1em;
+           font-weight: bold;
+           text-transform: uppercase;
+           transition: all .3s ease-in-out;
+           padding: 10px 20px;
+       }
+
+       .btn:before {
+           content: attr(data-hover);
+           position: absolute;
+           top: 0;
+           left: 0;
+           width: 100%;
+           opacity: 0;
+           transform: translate(-100%, 0);
+       }
+
+       .btn:hover div {
+           opacity: 0;
+           transform: translate(100%, 0);
+       }
+
+       .btn:hover:before {
+           opacity: 1;
+           transform: translate(0, 0);
+       }
+	   .btn {
+    		position: relative;
+    		top: 200px; /* 距离顶部的距离 */
+    		left: 210px; /* 距离右侧的距离 */
+			font-size: 72px;
+			width: 500px; /* 设置按钮的宽度为父元素宽度的50% */
+    		height: auto; /* 自动调整高度以保持比例 */
+			color: white;
+			border:transparent;
+            font-family: "Times New Roman", Times, serif;
+		}
+        .text {
+            text-align: center; /* 居中文本 */
+            margin-top: 20px; /* 调整文本与按钮之间的垂直间距 */
+            position: absolute;
+    		top: 300px; /* 距离顶部的距离 */
+    		left: 300px; 
+            line-height: 1;
+            color: white;
+            font-family: "Times New Roman", Times, serif;
+            
+       }
+    </style>
+</head>
+<body>
+    <button class="btn" data-hover="EXPLORE" onclick="window.location.href='our research.html'">
+        <div>SPIRIT</div>
+        
+    </button>
+    <div class="text">
+        <h1>Science in Polymer Innovation with<br></br>aRtificial Intelligence Technology</h1>
+    </div>
+</body>
+</html>

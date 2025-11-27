@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fast Search for Organic Solar Cells</title>
+    <link rel="stylesheet" href="search/styles.css">
+    <!-- 引入 Plotly.js 庫 -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- 引入 SMILES Drawer 庫 -->
+    <script src="https://unpkg.com/smiles-drawer@1.0.0/dist/smiles-drawer.min.js"></script>
+    <!-- 引入生成的數據文件 -->
+    <script src="search/data1.js"></script>
+</head>
+<body>
+    <div class="header"><a href="cover.html">Fast Prediction for Organic Solar Cells</a></div>
+    <div class="navbar">
+        <a href="prediction.html">Page1</a>
+        <a href="search.html">Page2</a>
+        <a href="contact.html">Support</a>
+    </div>
+    <div class="container">
+        <h1>Search for Organic Solar Cells Data</h1>
+        <p>本頁面提供了一個直觀且強大的工具，讓研究人員能夠輕鬆選擇並可視化不同的參數，從而快速找到與其研究相關的有機太陽能電池材料數據。</p>
+        <h2>主要功能：</h2>
+        <ul>
+            <li><strong>參數選擇</strong>：用戶可以從下拉選單中選擇要展示在X軸和Y軸的參數，並生成對應的散佈圖。</li>
+            <li><strong>化學結構顯示</strong>：點擊圖中的任意數據點後，可以在畫布上顯示對應的Donor或Acceptor的化學結構。</li>
+            <li><strong>快速查詢</strong>：使用者可透過輸入Donor或Acceptor的名稱進行快速查詢，以便篩選出具體的材料數據。</li>
+        </ul>
+        <p>這個平台旨在幫助研究人員更高效地探索有機太陽能電池的潛在材料，促進研究進展。</p>
+
+        <div class="form-group">
+            <label for="x-axis">選擇 X 軸參數</label>
+            <select id="x-axis"></select>
+        </div>
+        <div class="form-group">
+            <label for="y-axis">選擇 Y 軸參數</label>
+            <select id="y-axis" disabled></select>
+        </div>        
+        <div class="chart-container">
+            <div id="chart"></div>
+            <div class="input-container">
+                <input type="text" id="input1" placeholder="Enter donor name">
+                <input type="text" id="input2" placeholder="Enter acceptor name">
+                <button id="actionButton">Search</button> <!-- 新增的按鈕 -->
+            </div>
+        </div>
+        
+        <!-- 這裡是顯示點擊後的 Donor 化學結構的畫布 -->
+        <canvas id="clickedDonorCanvas1" width="300" height="300" style="border:0px solid #d3d3d3;"></canvas>
+        <!-- 這裡是顯示點擊後的 Acceptor 化學結構的畫布 -->
+        <canvas id="clickedAcceptorCanvas1" width="300" height="300" style="border:0px solid #d3d3d3;"></canvas>
+        <div id="tableId" style="display: none;"></div>
+    </div>
+    <footer class="footer">
+        <p>Copyright © 2024 SPIRIT.   All rights reserved.  SPIRIT uses cookies to personalize content. <a href="privacy.html">Privacy Policy</a></p>
+        
+    </footer>
+
+    <script src="search/charts.js"></script>
+    <script src="search/events.js"></script>
+    <script src="search/chemistry.js"></script>
+    <script src="search/tables.js"></script>
+</body>
+</html>
