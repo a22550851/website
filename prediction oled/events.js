@@ -594,7 +594,7 @@ async function fetchPropertiesPredictionData(emitter_smiles = null) {
     const bodyData = {};
     if (emitter_smiles) bodyData.emitter_smiles = emitter_smiles;
 
-    const response = await fetch('https://polymer-ml-platform-server.site/OLED_properties_predict', {
+    const response = await fetch('http://polymeraiplatform.site/OLED_properties_predict', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(bodyData)
@@ -1439,3 +1439,4 @@ function changeCanvasLabelColor(canvasId, color) {
         canvasLabel.style.color = color;
     }
 }
+
