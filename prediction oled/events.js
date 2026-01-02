@@ -1126,7 +1126,7 @@ async function fetchPerformancePredictionData(donorSmiles = null, acceptorSmiles
         if (donorSmiles) bodyData.donorsmiles = donorSmiles;
         if (acceptorSmiles) bodyData.acceptorsmiles = acceptorSmiles;
 
-        const response = await fetch('https://polymer-ml-platform-server.site/performance_predict', {
+        const response = await fetch('http://polymeraiplatform.site/performance_predict', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -1439,4 +1439,5 @@ function changeCanvasLabelColor(canvasId, color) {
         canvasLabel.style.color = color;
     }
 }
+
 
