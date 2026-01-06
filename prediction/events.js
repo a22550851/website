@@ -3126,7 +3126,7 @@ async function fetchPropertiesPredictionData(donorSmiles = null, acceptorSmiles 
         if (donorSmiles) bodyData.donorsmiles = donorSmiles;
         if (acceptorSmiles) bodyData.acceptorsmiles = acceptorSmiles;
 
-        const response = await fetch('https://polymer-ml-platform-server.site/OSC_properties_predict', {
+        const response = await fetch('https://polymeraiplatform.site/OSC_properties_predict', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -3161,10 +3161,10 @@ async function fetchSpectrumPredictionData(donorSmiles = null, acceptorSmiles = 
         if (donorSmiles) bodyData.donorsmiles = donorSmiles;
         if (acceptorSmiles) bodyData.acceptorsmiles = acceptorSmiles;
 
-        // 查看請求的 bodyData
-        console.log('Request body:', bodyData);
+        console.log("===== [FETCH START] =====");
+        console.log("Request bodyData:", JSON.stringify(bodyData, null, 2));
 
-        const response = await fetch('https://polymer-ml-platform-server.site/OSC_spectrum_predict', {
+        const response = await fetch('https://polymeraiplatform.site/OSC_spectrum_predict', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -3172,31 +3172,40 @@ async function fetchSpectrumPredictionData(donorSmiles = null, acceptorSmiles = 
             body: JSON.stringify(bodyData)
         });
 
-        // 查看返回的 response 狀態
-        console.log('Response status:', response.status);
+        console.log("HTTP Status:", response.status);
 
-        if (response.ok) {
-            const data = await response.json();
-
-            // 查看返回的完整數據
-            console.log('Full response data:', data);
-
-            const donorResult = data.donor_value || [];
-            const acceptorResult = data.acceptor_value || [];
-
-            
-
-            // 只返回光谱数据，而不渲染
-            return { donorResult, acceptorResult };
-        } else {
-            console.error('Failed to fetch spectrum prediction data');
+        // 若後端回傳非 200，抓取文字訊息
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error("❌ Backend returned error:", errorText);
             return null;
         }
+
+        // 解析 JSON
+        const data = await response.json();
+        console.log("===== [FULL JSON RESPONSE] =====");
+        console.log(JSON.stringify(data, null, 2));
+
+        // 提取光譜結果
+        const donorResult = data.donor_value || [];
+        const acceptorResult = data.acceptor_value || [];
+
+        console.log("===== [DONOR SPECTRUM DATA] =====");
+        console.log(JSON.stringify(donorResult, null, 2));
+
+        console.log("===== [ACCEPTOR SPECTRUM DATA] =====");
+        console.log(JSON.stringify(acceptorResult, null, 2));
+
+        console.log("===== [FETCH END] =====");
+
+        return { donorResult, acceptorResult };
+
     } catch (error) {
-        console.error('Error fetching spectrum prediction data:', error);
+        console.error('❌ Exception thrown while fetching spectrum data:', error);
         return null;
     }
 }
+
 
 
 
@@ -4008,4 +4017,3 @@ function changeCanvasLabelColor(canvasId, color) {
         canvasLabel.style.color = color;
     }
 }
-
